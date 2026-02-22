@@ -1,0 +1,744 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Top Bar */
+.top-bar {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 8px;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+/* Header */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    border-bottom: 1px solid #f0f0f0;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 100;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+}
+
+.nav-menu ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 11px;
+    margin: 0 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.nav-menu ul li a.active {
+    font-weight: 700;
+}
+
+.header-icons {
+    display: flex;
+    gap: 20px;
+    color: #333;
+}
+
+.header-icons svg {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.header-icons svg:hover {
+    color: #888;
+}
+
+/* Hero Section */
+.hero-section {
+    width: 100%;
+    height: 85vh;
+    background-image: url('images/banner2.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 60px;
+}
+
+.hero-content h1 {
+    color: #fff;
+    font-size: 40px;
+    letter-spacing: 5px;
+    font-weight: 300;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.btn-shop {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 10px 30px;
+    border: 1px solid #fff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.btn-shop:hover {
+    background: #fff;
+    color: #000;
+}
+/* Container and Header */
+.new-arrivals {
+    padding: 60px 40px;
+    background-color: #fff;
+    position: relative;
+}
+
+.arrivals-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 20px;
+    letter-spacing: 2px;
+    font-weight: 400;
+}
+
+.arrivals-tabs ul {
+    display: flex;
+    list-style: none;
+}
+
+.arrivals-tabs ul li a {
+    text-decoration: none;
+    color: #888;
+    font-size: 11px;
+    margin-left: 20px;
+    text-transform: uppercase;
+}
+
+.arrivals-tabs ul li a.active {
+    color: #000;
+    border-bottom: 1.5px solid #000;
+    padding-bottom: 5px;
+}
+
+.carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.product-slider {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hide default scrollbar */
+}
+
+.product-slider::-webkit-scrollbar {
+    display: none;
+}
+
+/* 5 Cards Logic */
+.product-card {
+    flex: 0 0 calc(20% - 10px); /* 100% / 5 cards = 20% minus gap */
+    min-width: 200px;
+    text-align: center;
+}
+
+/* Image Effects */
+.product-img {
+    position: relative;
+    overflow: hidden; /* For zoom and size slide-up */
+    background-color: #f9f9f9;
+}
+
+.product-img img {
+    width: 100%;
+    display: block;
+    transition: transform 0.8s ease; /* Zoom speed */
+}
+
+/* HOVER: Zoom */
+.product-card:hover .product-img img {
+    transform: scale(1.1);
+}
+
+/* HOVER: Sizes Pop-up */
+.size-overlay {
+    position: absolute;
+    bottom: -40px; /* Initially hidden */
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 10px 0;
+    font-size: 10px;
+    transition: bottom 0.4s ease;
+    color: #333;
+}
+
+.product-card:hover .size-overlay {
+    bottom: 0;
+}
+
+.product-info {
+    padding: 15px 0;
+}
+
+.p-cat { font-size: 9px; color: #999; margin-bottom: 4px; }
+.p-name { font-size: 12px; font-weight: 500; margin-bottom: 4px; letter-spacing: 1px; }
+.p-price { font-size: 11px; color: #444; }
+
+.slider-arrow {
+    position: absolute;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    color: #000;
+}
+
+.left-arrow { left: -30px; }
+.right-arrow { right: -30px; }
+
+.custom-scroll-track {
+    width: 150px;
+    height: 2px;
+    background: #e0e0e0;
+    margin: 40px auto 0;
+    position: relative;
+}
+
+.scroll-bar {
+    width: 40%;
+    height: 100%;
+    background: #000;
+    position: absolute;
+    left: 0;
+}
+
+.artisanal-craft {
+    padding: 60px 40px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.craft-header {
+    margin-bottom: 50px;
+}
+
+.craft-header .sub-heading {
+    font-size: 18px;
+    color: #333;
+    font-weight: 300;
+}
+
+.craft-header .main-heading {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 5px 0;
+    color: #000;
+}
+
+.craft-header .sub-heading-bottom {
+    font-size: 22px;
+    font-style: italic;
+    color: #333;
+    font-family: 'Georgia', serif; 
+}
+
+/* Grid Layout */
+.category-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.category-item {
+    flex: 1; 
+    max-width: 450px;
+}
+
+.category-img {
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.category-img img {
+    width: 100%;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* Category Info & Button */
+.category-info h3 {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.shop-btn-outline {
+    display: inline-block;
+    padding: 6px 25px;
+    border: 1px solid #000;
+    color: #000;
+    text-decoration: none;
+    font-size: 10px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.shop-btn-outline:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Bridal Section  */
+.bridal-full-bleed {
+    width: 100%;
+    margin: 50px 0; 
+    padding: 0;
+    background-color: #fff;
+}
+
+.bridal-img-container {
+    width: 100%;
+    line-height: 0; 
+}
+
+.bridal-img-container img {
+    width: 100%; 
+    height: auto;
+    display: block;
+    max-height: 85vh; 
+    object-fit: cover;
+}
+
+.bridal-caption {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.bridal-caption p {
+    font-size: 16px;
+    color: #696969;
+    letter-spacing: 0.5px;
+    max-width: 700px; 
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+/* Bridal Carousel Section */
+.bridal-carousel-section {
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+}
+
+.bridal-grid {
+    display: flex;
+    width: 100%;
+    gap: 0; 
+}
+
+.bridal-item {
+    flex: 1; 
+    text-align: center;
+}
+
+/* Image Container */
+.bridal-img-box {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 3 / 4.5; 
+}
+
+.bridal-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease; 
+}
+
+/* Hover Effect: Zoom Image */
+.bridal-item:hover .bridal-img-box img {
+    transform: scale(1.1);
+}
+
+/* Hover Effect: Size Display */
+.size-pop {
+    position: absolute;
+    bottom: -50px; 
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 12px 0;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #000;
+    transition: bottom 0.4s ease;
+}
+
+.bridal-item:hover .size-pop {
+    bottom: 0;
+}
+
+/* Meta Data (Text below image) */
+.bridal-meta {
+    padding: 20px 10px;
+    background: #fff;
+}
+
+.bridal-meta .cat {
+    font-size: 9px;
+    color: #888;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+}
+
+.bridal-meta .name {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.whatsapp-link {
+    display: block;
+    font-size: 10px;
+    color: #9a9a9a;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Seasonal Favourites Section */
+.seasonal-favourites {
+    background-color: #f7f7f7; 
+    padding: 100px 60px;
+    width: 100%;
+}
+
+.seasonal-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+}
+
+/* Left Content */
+.seasonal-left {
+    flex: 1;
+}
+
+.seasonal-title {
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 2px;
+    color: #000;
+    margin-bottom: 25px;
+    font-family: 'Times New Roman', serif; 
+}
+
+.seasonal-subtitle {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #666;
+    max-width: 300px;
+    font-weight: 300;
+}
+
+.seasonal-center {
+    flex: 1.2;
+    display: flex;
+    justify-content: center;
+}
+
+.main-featured-img {
+    width: 400px; 
+    overflow: hidden;
+}
+
+.main-featured-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+/* Right Content: Category List */
+.seasonal-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.fav-list {
+    list-style: none;
+    width: 250px;
+}
+
+.fav-list li {
+    padding: 15px 0;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.fav-list li a {
+    text-decoration: none;
+    color: #888;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fav-list li.active, .fav-list li:hover {
+    border-bottom: 1.5px solid #000;
+}
+
+.fav-list li.active a, .fav-list li:hover a {
+    color: #000;
+}
+
+.arrow-right {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.art-of-dressing {
+    padding: 100px 0;
+    background-color: #fff;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+/* Header Styling */
+.art-header {
+    margin-bottom: 80px;
+}
+
+.art-subtitle {
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: #333;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.art-main-title {
+    font-size: 32px;
+    letter-spacing: 2px;
+    font-weight: 400;
+    font-family: 'Times New Roman', serif;
+}
+
+.art-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    gap: 5px; 
+    padding: 0 10px;
+}
+
+.art-item {
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.6s ease;
+}
+
+.art-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.item-1 { 
+    width: 210px; 
+    height: 400px; 
+    margin-top: 120px; 
+}
+
+.item-2 { 
+    width: 20%; 
+    height: 520px; 
+    margin-top: 0px; 
+}
+
+.item-3 { 
+    width: 20%; 
+    height: 380px; 
+    margin-top: 150px; 
+}
+
+.item-4 { 
+    width: 160px; 
+    height: 280px; 
+    margin-top: 220px; 
+}
+
+.item-5 { 
+    width: 270px; 
+    height: 580px; 
+    margin-top: 40px; 
+}
+
+.item-6 { 
+    width: 230px; 
+    height: 480px; 
+    margin-top: 100px; 
+}
+
+.item-7 { 
+    width: 190px; 
+    height: 400px; 
+    margin-top: 30px; 
+}
+
+.sania-footer {
+    padding: 80px 4% 40px;
+    background-color: #fff;
+    border-top: 1px solid #f0f0f0;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    color: #000;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 80px;
+    flex-wrap: wrap;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 160px;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-links a {
+    color: #000;
+    opacity: 0.8;
+}
+
+.footer-column h4 {
+    font-size: 12px;
+    font-weight: 600; 
+    letter-spacing: 0.8px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+.footer-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-nav li {
+    margin-bottom: 12px;
+}
+
+.footer-nav li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+}
+
+.newsletter-col {
+    flex: 2;
+    max-width: 380px;
+}
+
+.newsletter-col p {
+    font-size: 11px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.newsletter-input-wrap {
+    display: flex;
+    border: 1px solid #000; 
+    padding: 12px 15px;
+    align-items: center;
+}
+
+.newsletter-input-wrap input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 12px;
+    color: #666;
+}
+
+.newsletter-input-wrap button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.footer-bottom {
+    text-align: center;
+    position: relative;
+    padding-top: 40px;
+}
+
+.main-footer-logo {
+    max-width: 300px; 
+    height: auto;
+}
+
+.powered-by {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: #333;
+}
