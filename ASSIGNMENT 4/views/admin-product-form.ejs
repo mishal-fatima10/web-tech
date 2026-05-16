@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= formTitle %> - Admin Panel</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f5f1eb;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .admin-shell {
+            display: grid;
+            grid-template-columns: 240px minmax(0, 1fr);
+            min-height: 100vh;
+        }
+
+        .admin-sidebar {
+            background: #1f1a17;
+            color: #fff;
+            padding: 28px 22px;
+        }
+
+        .admin-sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 24px;
+        }
+
+        .admin-sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .admin-sidebar a {
+            color: #eadfce;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .admin-sidebar a.active,
+        .admin-sidebar a:hover {
+            background: #8b7355;
+            color: #fff;
+        }
+
+        .admin-main {
+            padding: 30px;
+        }
+
+        .panel {
+            background: #fff;
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+            max-width: 920px;
+        }
+
+        .header-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .header-row h1 {
+            margin: 0;
+            color: #221b18;
+        }
+
+        .header-row p {
+            margin-top: 8px;
+            color: #6b625b;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: none;
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #8b7355;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: #ece4d8;
+            color: #3f3429;
+        }
+
+        .alert {
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+        }
+
+        .alert-error {
+            background: #fde8e8;
+            color: #8a1f1f;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            color: #3d342c;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid #ddd3c7;
+            font-family: inherit;
+            font-size: 14px;
+            background: #fff;
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-width: 240px;
+            border-radius: 14px;
+            border: 1px solid #eee;
+            margin-top: 6px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .helper-text {
+            color: #776a5d;
+            font-size: 13px;
+        }
+
+        @media (max-width: 900px) {
+            .admin-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-sidebar nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-shell">
+        <aside class="admin-sidebar">
+            <h2>Admin Panel</h2>
+            <nav>
+                <a href="/admin">Dashboard</a>
+                <a href="/admin/products" class="active">Products</a>
+                <a href="/admin/products/new">Add Product</a>
+                <a href="/admin/users">Users</a>
+                <a href="/">Site Home</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <div class="panel">
+                <div class="header-row">
+                    <div>
+                        <h1><%= formTitle %></h1>
+                        <p>Use this form to <%= product ? 'update the existing product record' : 'add a new product to the catalog' %>.</p>
+                    </div>
+                    <a href="/admin/products" class="btn btn-secondary">Back to Products</a>
+                </div>
+
+                <% if (messages.error && messages.error.length > 0) { %>
+                    <% messages.error.forEach(msg => { %>
+                        <div class="alert alert-error"><%= msg %></div>
+                    <% }) %>
+                <% } %>
+
+                <form action="<%= formAction %>" method="POST" enctype="multipart/form-data">
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label for="name">Product Name</label>
+                            <input type="text" id="name" name="name" value="<%= product ? product.name : '' %>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="number" id="price" name="price" min="0" step="0.01" value="<%= product ? product.price : '' %>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stock">Stock</label>
+                            <input type="number" id="stock" name="stock" min="0" value="<%= product ? product.stock : 0 %>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category" required>
+                                <option value="">Select category</option>
+                                <% categories.forEach(category => { %>
+                                    <option value="<%= category %>" <%= product && product.category === category ? 'selected' : '' %>><%= category %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rating">Rating</label>
+                            <input type="number" id="rating" name="rating" min="0" max="5" step="0.1" value="<%= product ? product.rating : 0 %>">
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" placeholder="Optional product description"><%= product ? product.description : '' %></textarea>
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="image">Product Image</label>
+                            <input type="file" id="image" name="image" accept="image/*">
+                            <div class="helper-text">Upload a JPG, PNG, WebP, or GIF file. Leave blank to keep the current image when editing.</div>
+                            <% if (product && product.image) { %>
+                                <img src="<%= product.image %>" alt="Current product image" class="image-preview" onerror="this.onerror=null;this.src='/images/placeholder.svg'">
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary"><%= submitLabel %></button>
+                        <a href="/admin/products" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
