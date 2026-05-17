@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Products - Admin Panel</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f5f1eb;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .admin-shell {
+            display: grid;
+            grid-template-columns: 240px minmax(0, 1fr);
+            min-height: calc(100vh - 120px);
+        }
+
+        .admin-sidebar {
+            background: #1f1a17;
+            color: #fff;
+            padding: 28px 22px;
+        }
+
+        .admin-sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 24px;
+        }
+
+        .admin-sidebar nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .admin-sidebar a {
+            color: #eadfce;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .admin-sidebar a.active,
+        .admin-sidebar a:hover {
+            background: #8b7355;
+            color: #fff;
+        }
+
+        .admin-main {
+            padding: 30px;
+        }
+
+        .admin-panel {
+            background: #fff;
+            border-radius: 18px;
+            padding: 26px;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .page-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            color: #221b18;
+        }
+
+        .page-header p {
+            margin-top: 8px;
+            color: #6b625b;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: none;
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #8b7355;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: #ece4d8;
+            color: #3f3429;
+        }
+
+        .btn-danger {
+            background: #fce8e6;
+            color: #b3261e;
+        }
+
+        .alert {
+            padding: 14px 16px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+        }
+
+        .alert-error {
+            background: #fde8e8;
+            color: #8a1f1f;
+        }
+
+        .alert-success {
+            background: #e7f5ea;
+            color: #1f6b32;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        .products-table thead {
+            background: #1f1a17;
+            color: #fff;
+        }
+
+        .products-table th,
+        .products-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .products-table tbody tr:hover {
+            background: #faf7f1;
+        }
+
+        .product-image {
+            width: 56px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .empty-state {
+            padding: 28px;
+            text-align: center;
+            color: #766b61;
+        }
+
+        @media (max-width: 900px) {
+            .admin-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-sidebar {
+                padding: 18px;
+            }
+
+            .admin-sidebar nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-shell">
+        <aside class="admin-sidebar">
+            <h2>Admin Panel</h2>
+            <nav>
+                <a href="/admin">Dashboard</a>
+                <a href="/admin/products" class="active">Products</a>
+                <a href="/admin/products/new">Add Product</a>
+                <a href="/admin/users">Users</a>
+                <a href="/">Site Home</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <div class="admin-panel">
+                <div class="page-header">
+                    <div>
+                        <h1>Manage Products</h1>
+                        <p>Create, edit, and remove products from the catalog.</p>
+                    </div>
+                    <a href="/admin/products/new" class="btn btn-primary">Add New Product</a>
+                </div>
+
+                <% if (messages.error && messages.error.length > 0) { %>
+                    <% messages.error.forEach(msg => { %>
+                        <div class="alert alert-error"><%= msg %></div>
+                    <% }) %>
+                <% } %>
+
+                <% if (messages.success && messages.success.length > 0) { %>
+                    <% messages.success.forEach(msg => { %>
+                        <div class="alert alert-success"><%= msg %></div>
+                    <% }) %>
+                <% } %>
+
+                <% if (products.length > 0) { %>
+                    <div class="table-wrap">
+                        <table class="products-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Rating</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% products.forEach(product => { %>
+                                    <tr>
+                                        <td><img src="<%= product.image || '/images/placeholder.svg' %>" alt="<%= product.name %>" class="product-image" onerror="this.onerror=null;this.src='/images/placeholder.svg'"></td>
+                                        <td><strong><%= product.name %></strong></td>
+                                        <td><%= product.category %></td>
+                                        <td>Rs. <%= product.price.toLocaleString() %></td>
+                                        <td><%= product.stock %></td>
+                                        <td><%= product.rating.toFixed(1) %></td>
+                                        <td>
+                                            <div class="actions">
+                                                <a href="/admin/products/<%= product._id %>/edit" class="btn btn-secondary">Edit</a>
+                                                <form action="/admin/products/<%= product._id %>/delete" method="POST" onsubmit="return confirm('Delete this product? This action cannot be undone.');">
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <div class="empty-state">
+                        <h3>No products available</h3>
+                        <p>Add your first product to start managing inventory.</p>
+                    </div>
+                <% } %>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
