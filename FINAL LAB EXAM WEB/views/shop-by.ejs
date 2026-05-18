@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop By - Sania Maskatiya</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        .page-header {
+            padding: 30px 20px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            color: #8b4789;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .alerts {
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .alert-error {
+            background: #fdecea;
+            color: #b71c1c;
+            border: 1px solid #f4c1c0;
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .filters-section {
+            background: white;
+            padding: 24px;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+        }
+
+        .filters-title {
+            margin-bottom: 18px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #4b1653;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            color: #333;
+            background: #fff;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Primary filter button - sleek black */
+        .btn-primary, .btn-apply {
+            background: #000;
+            color: #fff;
+            border: 1px solid #000;
+            border-radius: 20px;
+            padding: 10px 18px;
+        }
+
+        .btn-primary:hover, .btn-apply:hover {
+            background: #111;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* Secondary / Clear Filters - outline style */
+        .btn-secondary, .btn-clear {
+            background: transparent;
+            color: #000;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 10px 18px;
+        }
+
+        .btn-secondary:hover, .btn-clear:hover {
+            background: #000;
+            color: #fff;
+            border-color: #000;
+        }
+
+        .products-info {
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.07);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            background: #f6f6f6;
+        }
+
+        .product-info {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .product-category {
+            font-size: 0.78rem;
+            color: #8b4789;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            line-height: 1.2;
+            font-weight: 700;
+            color: #202020;
+        }
+
+        .product-price {
+            color: #8b4789;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .product-rating {
+            color: #f39c12;
+            font-size: 0.95rem;
+        }
+
+        .product-stock {
+            font-size: 0.9rem;
+        }
+
+        .stock-available {
+            color: #27ae60;
+        }
+
+        .stock-unavailable {
+            color: #c0392b;
+        }
+
+        .product-actions {
+            margin-top: auto;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-small {
+            flex: 1;
+            padding: 11px 14px;
+            border-radius: 10px;
+            font-size: 0.92rem;
+        }
+
+        .no-products {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 20px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.04);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .pagination a,
+        .pagination span {
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .pagination a:hover {
+            background: #8b4789;
+            color: #fff;
+            border-color: #8b4789;
+        }
+
+        .pagination .active {
+            background-color: #8b4789;
+            color: white;
+            border-color: #8b4789;
+        }
+
+        .pagination .disabled {
+            color: #aaa;
+            cursor: default;
+            border-color: #eee;
+        }
+
+        @media (max-width: 768px) {
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">SHOP BY - BROWSE THE FULL COLLECTION</div>
+
+    <header class="main-header">
+        <div class="logo">
+            <img src="/images/logo.svg" alt="Sania Maskatiya">
+        </div>
+
+        <button class="hamburger-menu" id="hamburgerMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-menu" id="navMenu">
+            <ul>
+                <li><a href="/">Homepage</a></li>
+                <li><a href="/unstitched-lawn">UNSTITCHED LAWN '26</a></li>
+                <li><a href="/shop-by">SHOP BY</a></li>
+                <li><a href="/onsale-products">ON SALE</a></li>
+                <li><a href="/luxe-pret">LUXE PRET</a></li>
+                                <li><a href="/formals">FORMALS</a></li>
+                <li><a href="/bridals">BRIDALS</a></li>
+                                <li><a href="/contact-us">Contact Us</a></li>
+                <% if (user) { %>
+                    <li><a href="/profile">My Profile</a></li>
+                    <li><a href="/orders">My Orders</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                    <% if (user.role === 'admin') { %>
+                        <li><a href="/admin">Admin Panel</a></li>
+                    <% } %>
+                <% } else { %>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                <% } %>
+            </ul>
+        </nav>
+
+        <div class="header-icons">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <h1>SHOP BY COLLECTION</h1>
+        <p>Browse the full catalog, search products, filter by category and price, sort by rating or price, and page through results.</p>
+    </div>
+
+    <div class="container">
+        <% if (messages.error && messages.error.length > 0) { %>
+            <div class="alerts">
+                <% messages.error.forEach(msg => { %>
+                    <div class="alert alert-error"><%= msg %></div>
+                <% }) %>
+            </div>
+        <% } %>
+
+        <% if (messages.success && messages.success.length > 0) { %>
+            <div class="alerts">
+                <% messages.success.forEach(msg => { %>
+                    <div class="alert alert-success"><%= msg %></div>
+                <% }) %>
+            </div>
+        <% } %>
+
+        <div class="filters-section">
+            <div class="filters-title">Search & Filter</div>
+            <form method="get" action="/shop-by">
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label for="search">Search Products</label>
+                        <input
+                            type="text"
+                            id="search"
+                            name="search"
+                            placeholder="Search by product name..."
+                            value="<%= searchQuery %>"
+                        >
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                            <option value="">All Categories</option>
+                            <% categories.forEach(cat => { %>
+                                <option value="<%= cat %>" <%= categoryFilter === cat ? 'selected' : '' %>><%= cat %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="minPrice">Min Price</label>
+                        <input
+                            type="number"
+                            id="minPrice"
+                            name="minPrice"
+                            min="0"
+                            placeholder="0"
+                            value="<%= minPrice === 0 ? '' : minPrice %>"
+                        >
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="maxPrice">Max Price</label>
+                        <input
+                            type="number"
+                            id="maxPrice"
+                            name="maxPrice"
+                            min="0"
+                            placeholder="Any"
+                            value="<%= maxPrice === Infinity ? '' : maxPrice %>"
+                        >
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="sort">Sort By</label>
+                        <select id="sort" name="sort">
+                            <option value="name" <%= sortBy === 'name' ? 'selected' : '' %>>Name (A-Z)</option>
+                            <option value="price-low" <%= sortBy === 'price-low' ? 'selected' : '' %>>Price (Low to High)</option>
+                            <option value="price-high" <%= sortBy === 'price-high' ? 'selected' : '' %>>Price (High to Low)</option>
+                            <option value="rating" <%= sortBy === 'rating' ? 'selected' : '' %>>Rating (Highest First)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-buttons">
+                    <button type="submit" class="btn btn-apply">Apply Filters</button>
+                    <a href="/shop-by" class="btn btn-clear">Clear Filters</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="products-info">
+            Showing <strong><%= products.length %></strong> of <strong><%= totalProducts %></strong> products
+            <% if (searchQuery) { %> for "<%= searchQuery %>" <% } %>
+            <% if (categoryFilter) { %> in <strong><%= categoryFilter %></strong> <% } %>
+        </div>
+
+        <% if (products.length > 0) { %>
+            <div class="products-grid">
+                <% products.forEach(product => { %>
+                    <div class="product-card">
+                        <img src="<%= product.image || "/images/placeholder.svg" %>" alt="<%= product.name %>" class="product-image" onerror="this.onerror=null;this.src='/images/placeholder.svg'">
+                        <div class="product-info">
+                            <div class="product-category"><%= product.category %></div>
+                            <div class="product-name"><%= product.name %></div>
+                            <div class="product-price">Rs. <%= product.price.toLocaleString() %></div>
+                            <div class="product-rating">
+                                <% for (let i = 0; i < Math.round(product.rating); i++) { %>★<% } %>
+                                <% for (let i = Math.round(product.rating); i < 5; i++) { %>☆<% } %>
+                                (<%= product.rating.toFixed(1) %>)
+                            </div>
+                            <div class="product-stock <%= product.stock > 0 ? 'stock-available' : 'stock-unavailable' %>">
+                                <%= product.stock > 0 ? `In Stock (${product.stock} available)` : 'Out of Stock' %>
+                            </div>
+                            <% if (product.description) { %>
+                                <p style="font-size: 0.95rem; color: #555; margin-top: 8px;"><%= product.description.substring(0, 80) %><%= product.description.length > 80 ? '...' : '' %></p>
+                            <% } %>
+                            <div class="product-actions">
+                                <form method="get" action="/order/confirm" style="display:flex;gap:8px;align-items:center;width:100%">
+                                    <input type="hidden" name="productId" value="<%= product._id %>">
+                                    <input type="number" name="qty" value="1" min="1" max="<%= product.stock %>" style="width:70px;padding:8px;border:1px solid #ddd;border-radius:6px;font-size:0.95rem">
+                                    <button class="btn btn-primary btn-small" type="submit" <%= product.stock === 0 ? 'disabled' : '' %> style="flex:1">Order Now</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="products-grid">
+                <div class="no-products">
+                    <h2>No products matched your search</h2>
+                    <p>Try changing your search term or clearing the filters.</p>
+                    <a href="/shop-by" class="btn btn-primary" style="margin-top: 18px;">Reset Filters</a>
+                </div>
+            </div>
+        <% } %>
+
+        <% if (totalPages > 1) { %>
+            <div class="pagination">
+                <% const queryPrefix = `&search=${encodeURIComponent(searchQuery)}&category=${encodeURIComponent(categoryFilter)}&minPrice=${minPrice === 0 ? '' : minPrice}&maxPrice=${maxPrice === Infinity ? '' : maxPrice}&sort=${sortBy}`; %>
+                <% if (currentPage > 1) { %>
+                    <a href="/shop-by?page=<%= currentPage - 1 %><%= queryPrefix %>">← Previous</a>
+                <% } else { %>
+                    <span class="disabled">← Previous</span>
+                <% } %>
+
+                <% let startPage = Math.max(1, currentPage - 2); %>
+                <% let endPage = Math.min(totalPages, currentPage + 2); %>
+                <% if (startPage > 1) { %>
+                    <a href="/shop-by?page=1<%= queryPrefix %>">1</a>
+                    <% if (startPage > 2) { %>
+                        <span>...</span>
+                    <% } %>
+                <% } %>
+
+                <% for (let i = startPage; i <= endPage; i++) { %>
+                    <% if (i === currentPage) { %>
+                        <span class="active"><%= i %></span>
+                    <% } else { %>
+                        <a href="/shop-by?page=<%= i %><%= queryPrefix %>"><%= i %></a>
+                    <% } %>
+                <% } %>
+
+                <% if (endPage < totalPages) { %>
+                    <% if (endPage < totalPages - 1) { %>
+                        <span>...</span>
+                    <% } %>
+                    <a href="/shop-by?page=<%= totalPages %><%= queryPrefix %>"><%= totalPages %></a>
+                <% } %>
+
+                <% if (currentPage < totalPages) { %>
+                    <a href="/shop-by?page=<%= currentPage + 1 %><%= queryPrefix %>">Next →</a>
+                <% } else { %>
+                    <span class="disabled">Next →</span>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
